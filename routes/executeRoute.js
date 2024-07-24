@@ -10,16 +10,7 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-// import { createClient } from 'redis';
-
-// const server = createClient({
-//     password: process.env.REDIS_PASSWORD,
-//     socket: {
-//         host: 'redis-19823.c98.us-east-1-4.ec2.redns.redis-cloud.com',
-//         port: 19823
-//     }
-// });
-
+const server = "redis://127.0.0.1:6379";
 // console.log(server)
 
 router.post("/execute", async (req, res) => {
@@ -41,9 +32,9 @@ router.post("/execute", async (req, res) => {
   }
   console.log(buildLang);
   const randNO = getRandomInt(1000);
-  const codeExecutor = new CodeExecutor("myExecutor" + randNO, "redis://127.0.0.1:6379");
+  const codeExecutor = new CodeExecutor("myExecutor" + randNO, server);
 
-  const worker = new Worker("myExecutor" + randNO,"redis://127.0.0.1:6379");
+  const worker = new Worker("myExecutor" + randNO, server);
 
   await worker.build([buildLang]);
   worker.start();
