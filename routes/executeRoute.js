@@ -74,6 +74,7 @@ server.open(async (error) => {
     });
   } else {
     console.error("Failed to start Redis server:", error);
+    res.status(500).json("failed to run tests");
   }
 });
 
