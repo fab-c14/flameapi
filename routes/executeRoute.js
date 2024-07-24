@@ -10,12 +10,16 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-const server = new RedisServer(6379);
-server.open((error) => {
-  if (error === null) {
-    console.log("REDIS STARTED");
-  }
+import { createClient } from 'redis';
+
+const server = createClient({
+    password: process.env.REDIS_PASSWORD,
+    socket: {
+        host: 'redis-19823.c98.us-east-1-4.ec2.redns.redis-cloud.com',
+        port: 19823
+    }
 });
+
 // console.log(server)
 
 router.post("/execute", async (req, res) => {
